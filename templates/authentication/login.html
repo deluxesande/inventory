@@ -1,0 +1,121 @@
+{% extends 'base/main.html' %}
+
+{% block title %}
+    Login
+{% endblock %}
+
+{% load static %}
+
+{% block content %}
+
+
+<section class="h-dvh bg-transparent ">
+    
+  
+                  <p class="text-center">Sign In</p>
+                  {% include 'base/messages.html' %}
+
+
+                  <div id='container' onClick={handleOnClose} class='fixed inset-0 bg-blue bg-opacity-30 backdrop-blur-sm flex justify-center items-center'>
+
+
+                <div class='bg-offwhite py-8 px-24 rounded-lg'>
+                <div class='cursor-pointer'>
+                    <IoCloseCircle class='float-right text-red'/>
+                </div>
+                <p class='text-lg font-bold text-gray-400'>Login</p>
+                <p class='text-xls font-normal text-gray-400 pb-8'>Please enter your email and password to login <br /> to your <span class='text-red-400'>inventory</span> dashboard.</p>
+                <form class='pb-6'  method="post" action={% url 'login' %}>
+                  {% csrf_token %}
+            
+                    <div class='relative pb-6'>
+                        <input type="text" required name="username" id="username"  value="{{data.username}}"" class='peer  w-full rounded-t bg-white opacity-50 h-10 border-0 border-b-2 border-red focus:border-red text-black focus:outline-none appearance-none focus:ring-0 drop-shadow-xl focus:drop-shadow-xl'/>
+                        <label for="email" class='absolute left-3 -top-1 peer-focus:left-3 peer-focus:-top-1 peer-focus:text-mbl text-gray-400 text-mbl peer-placeholder-shown:text-base peer-placeholder-shown:top-2 peer-placeholder-shown:text-gray-400 transition-all'>Username</label>
+                    </div>
+                    <div class='relative pb-6'>
+                        <input type="password" name="password" id="password"placeholder=""  class='peer peer  w-full rounded-t bg-white opacity-50 h-10 border-0 border-b-2 border-red focus:border-red text-black focus:outline-none appearance-none focus:ring-0 drop-shadow-xl focus:drop-shadow-xl'/>
+                        <label for="password" class='absolute left-3 -top-1 peer-focus:left-3 peer-focus:-top-1 peer-focus:text-mbl text-gray-400 text-mbl peer-placeholder-shown:text-base peer-placeholder-shown:top-2 peer-placeholder-shown:text-gray-400 transition-all'>Password</label>
+                        <!-- <div class='absolute top-2 right-5 cursor-pointer'>
+                            {
+                                (showPassword === false ? <LuEye onClick={toggle}/> : <LuEyeOff onClick={toggle}/>)
+                            }
+                            
+                            
+                        </div> -->
+                    </div>
+                    <div class='flex items-center justify-between'>
+                    <div class='flex items-center justify-start'>
+                    <input type="checkbox" name="" id=""  />
+                    <p class='p-3'>Remember me</p>
+                    </div>
+                    <div id='login' class=''>
+                        <p class='text-red hover:cursor-pointer'>Fogort password?</p>
+                    </div>
+                    </div>
+                    <div class='ml-12'>
+                        <button class='bg-green-700 cursor-pointer text-white sm:px-10 py-1.5 items-center justify-center rounded-full text-base font-roboto ml-auto mr-12'>Login</button>
+                    </div>
+            
+                </form>
+
+            
+
+                <div class='pt-6'>
+                    <p>If you don't have an account, <span class='text-red cursor-pointer'>Register now</span></p>
+                </div>
+                </div>
+            
+            
+            </div>
+
+                  
+  
+                  <!-- <form class="" method="post" action={% url 'login' %}>
+                      {% csrf_token %}
+
+                        <div class="flex flex-col gap-2">
+                          <div class="relative mt-6 mb-3">
+                            <input type="email" name="email" id="email" class="peer w-full border-b placeholder:text-transparent" value="{{data.username}}" />
+                            <label for="email" class="absolute left-0 ml-1 -translate-y-3 bg-white px-1 text-sm duration-100 ease-linear peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 ">EMAIL</label>
+                          </div>
+                          <div class="relative mt-6 mb-3">
+                            <input type="password" name="password" id="password"placeholder="password"  class="peer w-full border-b placeholder:text-transparent" />
+                            <label for="email" class="absolute left-0 ml-1 px-1 -translate-y-3 bg-white text-sm duration-100 ease-linear peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 ">PASSWORD</label>
+                          </div>
+                          <button class="mt-10 w-full rounded-md bg-slate-600 py-2 px-5 text-white">Submit</button>
+                        </div>
+                     
+                    <!-- <div class="d-flex flex-row align-items-center mb-4">
+                      <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                      <div class="form-outline flex-fill mb-0">
+                        <input type="text" required name="username" id="username"  value="{{data.username}} class="form-control""/>
+                        <label class="form-label" for="username">Your Username</label>
+                      </div>
+                    </div>
+  
+                    <div class="d-flex flex-row align-items-center mb-4">
+                      <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                      <div class="form-outline flex-fill mb-0">
+                        <input type="password" required name="password" id="password" class="form-control" />
+                        <label class="form-label" for="password">Password</label>
+                      </div>
+                    </div>
+  
+                     
+                    <div class="form-check d-flex justify-content-center mb-5">
+                      <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3c" />
+                      <label class="form-check-label" for="form2Example3">
+                        Remember Me
+                      </label>
+                    </div> -->
+  
+                    <!-- <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                      <input type="submit" class="btn btn-primary" value="Login">
+                    </div> -->
+                    <!-- <button>login</button> -->
+  
+                  <!-- </form> --> 
+
+  </section>
+    
+{% endblock %}

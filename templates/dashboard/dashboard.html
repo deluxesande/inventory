@@ -1,0 +1,102 @@
+{% extends 'base/main.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- dashboard start  -->
+<div class="w-full flex bg-red-300 dark:bg-gray-400 h-screentext-white font-outfit">
+  <!-- sidebar  -->
+  <div
+    class="dark:bg-gray-700 bg-gray-100 w-20 md:w-1/5 h-screen overflow-hidden flex flex-col justify-between border-r-4 border-gray-700">
+    <div>
+      <!-- logo  -->
+      <div class="flex justify-center px-2 py-4 items-center gap-1 text-white">
+        <div
+          class="[filter:blur(4px)] rounded-[50px] [background:linear-gradient(180deg,_#d9d9d9,_#737373_53%)] w-[3rem] h-[3rem] border-[4px] border-solid border-gray-400 mb-4">
+        </div>
+        <p class="hidden md:block">Client Name</p>
+      </div>
+      <!-- logo ends  -->
+      <!-- nav items side bar  -->
+      <div>
+        <div class="bg-gray-400 flex items-center justify-center gap-4 p-4 mb-1">
+          <img class="max-w-full overflow-hidden max-h-full" alt="" src="{% static 'images/group.svg' %}" />
+          <div class="hidden md:block font-semibold bg-gray-400 text-white text-center">Dashboard</div>
+        </div>
+        <div class="bg-gray-400 flex items-center justify-center gap-4 p-4 mb-1">
+          <img class="max-w-full overflow-hidden max-h-full" alt="" src="{% static 'images/basileditoutline.svg' %}" />
+          <div class="hidden md:block font-semibold bg-gray-400 text-white text-center">Add Record</div>
+        </div>
+        <div class="bg-gray-400 flex items-center justify-center gap-4 p-4">
+          <img class="max-w-full overflow-hidden max-h-full" alt=""
+            src="{% static 'images/basilfiledownloadoutline.svg' %}" />
+          <div class="hidden md:block font-semibold bg-gray-400 text-white text-center">Records</div>
+        </div>
+      </div>
+    </div>
+    <!-- logout setting   -->
+    <div class="mb-8">
+      <div class="flex items-center justify-center gap-4 text-red-500 mb-4">
+        <div class="hidden md:block font-semibold">
+          <a href={% url 'logout_user' %}>Logout</a>
+        </div>
+        <img class="w-4 overflow-hidden max-h-full" alt="" src="{% static 'images/vector.svg' %}" />
+      </div>
+      <div class="flex items-center justify-center gap-4 text-white">
+        <div class="font-semibold hidden md:block">settings</div>
+        <img class="w-4 overflow-hidden max-h-full" alt="" src="{% static 'images/mingcuteusersettingfill.svg' %}" />
+      </div>
+    </div>
+  </div>
+  <!-- right section    -->
+  <div class="w-4/5 flex flex-col justify-between h-screen overflow-scroll">
+    <!-- header  -->
+    <div
+      class="bg-gray-800 w-full flex flex-col md:flex-row items-center justify-between md:px-6 md:py-2 p-2 text-white">
+      <p class="text-xl mb-4 md:mb-0 text-center">Day Book</p>
+      <div class="flex w-1/2 items-center justify-between md:gap-10">
+        <!-- icons  -->
+        <div class="flex flex-row items-center justify-center gap-4">
+          <img class="w-4 relative h-4 cursor-pointer" alt="" src="{% static 'images/vector1.svg' %}" id="vectorIcon" />
+          <img class="w-4 relative h-4 overflow-hidden cursor-pointer" alt=""
+            src="{% static 'images/fluentdarktheme20filled.svg' %}" id="theme-toggle" />
+          <img class="w-4 relative h-4 overflow-hidden cursor-pointer" alt=""
+            src="{% static 'images/basilnotificationonoutline.svg' %}" />
+        </div>
+        <!-- employee details  -->
+        <div class="flex flex-col items-center justify-center">
+          <img class="rounded-[100px] w-8 h-8 object-cover" alt="" src="{% static 'images/2151064043-1@2x.png' %}" />
+          <p class="text-sm text-white">Employer Name</p>
+          <p class="text-sm text-white">abcde@gmail.com</p>
+        </div>
+      </div>
+    </div>
+    <!-- main section  -->
+    <div class="bg-gray-800 m-1 py-8 px-12 text-white h-full flex flex-col md:flex-row justify-between rounded-md">
+      <div>
+        <p class="font-medium mb-4">Welcome Message</p>
+        <div class="mb-6">
+          <button class="bg-gray-600 py-2 px-4 rounded-md">
+            <a href="#">new entry</a>
+          </button>
+        </div>
+        <div class="mb-6">
+          <input class="bg-gray-600 text-sm text-gray-100 rounded-sm overflow-hidden p-2 border-one outline-none"
+            placeholder="mm/dd/yyyy" type="date" />
+        </div>
+        <div
+          class="w-[14.75rem] relative tracking-[0.04em] font-medium inline-block min-h-20 min-w-20 md:min-h-80 md:min-w-80 bg-gray-600 p-1 rounded-md mb-4 md:mb-0">
+          <p class="text-center">Recent Activity</p>
+        </div>
+      </div>
+      <!-- graphs  -->
+      <div class="font-medium">
+        <p class="text-center mb-6">Graphs and Overview</p>
+        <img class="w-[21.438rem] h-[15.25rem] object-cover" alt=""
+          src="{% static 'images/4239584-90457-1@2x.png' %}" />
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

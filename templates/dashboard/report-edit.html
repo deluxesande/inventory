@@ -1,0 +1,43 @@
+{% extends 'base/main.html' %}
+
+{% block title %}
+    Create New Report
+{% endblock %}
+
+
+{% load static %}
+
+{% block content %}
+
+{% include 'base/messages.html' %}
+
+<form class=" row gy-2 gx-3 align-items-center" method="POST" action="{% url 'report-edit' report.pk %}">
+    {% csrf_token %}
+    <input type="hidden" name="_method" value="PUT">
+    <!-- Rest of your form fields -->
+    <div class="flex flex-col bg-offwhite py-8 px-24 rounded-lg gap-3 w-dvw h-dvh justify-center items-center">
+        {% for field in form %}
+            <div class="mb-4 w-full">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="{{ field.id_for_label }}">
+                    {{ field.label }}
+                </label>
+                {% if field.name == 'category' or field.name == 'subcategory' %}
+                    <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="{{ field.id_for_label }}">
+                        {% for choice in field.field.choices %}
+                            <option value="{{ choice.0 }}" {% if field.value == choice.0 %}selected{% endif %}>{{ choice.1 }}</option>
+                        {% endfor %}
+                    </select>
+                {% else %}
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="{{ field.id_for_label }}" type="text" name="{{ field.name }}" value="{{ field.value }}">
+                {% endif %}
+            </div>
+        {% endfor %}
+        <div class="flex space-x-4 w-full">
+            <a href="{% url 'approve_report' report.pk %}" class="bg-green-700 cursor-pointer text-white sm:px-10 py-1.5 items-center justify-center rounded-full text-base font-roboto w-full text-center">Approve</a>
+            <a href="{% url 'collect_feedback' report.pk %}" class="bg-red-700 cursor-pointer text-white sm:px-10 py-1.5 items-center justify-center rounded-full text-base font-roboto w-full text-center">Reject with Feedback</a>
+            <button class='bg-gray-700 cursor-pointer text-white sm:px-10 py-1.5 items-center justify-center rounded-full text-base font-roboto w-full text-center'>Modify and Approve</button>
+        </div>
+    </div>
+</form>
+
+{% endblock %}

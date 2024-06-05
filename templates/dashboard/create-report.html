@@ -1,0 +1,26 @@
+{% extends 'base/main.html' %}
+
+{% block title %}
+    Create New Report
+{% endblock %}
+
+
+{% load static %}
+
+{% block content %}
+
+<h3>New Report</h3>
+<p  class="cursor-pointer text-gray-600 hover:text-red-400 " onClick="javascript:history.go(-2);">Go Back</p>
+{% include 'base/messages.html' %}
+
+<form class="row gy-2 gx-3 align-items-center" method="POST" action={% url 'new-report' %}>
+    {% csrf_token %}
+    <!-- {{ form  }} -->
+ <div class="flex flex-col bg-offwhite py-8 px-24  rounded-lg gap-3 w-dvw h-dvh justify-center items-center">
+    {{form}}
+    <button class='bg-green-700 cursor-pointer text-white sm:px-10 py-1.5 items-center justify-center rounded-full text-base font-roboto'>Submit</button>
+    
+</div>
+</form>
+
+{% endblock %}

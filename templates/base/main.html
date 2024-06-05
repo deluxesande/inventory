@@ -1,0 +1,120 @@
+<!-- {% load static tailwind_tags %} -->
+{% load tailwind_tags %}
+{% load compress %}
+{% load static %}
+
+<!DOCTYPE html>
+<html class="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="google" content="notranslate">
+  <!-- Chart js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Toastify CSS -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
+  <!-- Toastify JS -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+  <link rel="stylesheet" href="{% static 'css/output.css' %}">
+
+  <link rel="stylesheet" href="../../static/styles/global.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inria Sans:wght@400&display=swap" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% tailwind_css %}
+  <title>
+    {% block title %}
+
+    {% endblock %}
+  </title>
+
+  {% compress css %}
+  <link rel="stylesheet" href="{% static 'src/output.css' %}">
+  {% endcompress %}
+  <script>
+    window.onload = function () {
+
+      var chart = new CanvasJS.Chart("chartContainer", {
+        exportEnabled: true,
+        animationEnabled: true,
+        title: {
+          text: "State Operating Funds"
+        },
+        legend: {
+          cursor: "pointer",
+          itemclick: explodePie
+        },
+        data: [{
+          type: "pie",
+          showInLegend: true,
+          toolTipContent: "{name}: <strong>{y}%</strong>",
+          indexLabel: "{name} - {y}%",
+          dataPoints: [
+            { y: 26, name: "School Aid", exploded: true },
+            { y: 20, name: "Medical Aid" },
+            { y: 5, name: "Debt/Capital" },
+            { y: 3, name: "Elected Officials" },
+            { y: 7, name: "University" },
+            { y: 17, name: "Executive" },
+            { y: 22, name: "Other Local Assistance" }
+          ]
+        }]
+      });
+      chart.render();
+    }
+
+    function explodePie(e) {
+      if (typeof (e.dataSeries.dataPoints[e.dataPointIndex].exploded) === "undefined" || !e.dataSeries.dataPoints[e.dataPointIndex].exploded) {
+        e.dataSeries.dataPoints[e.dataPointIndex].exploded = true;
+      } else {
+        e.dataSeries.dataPoints[e.dataPointIndex].exploded = false;
+      }
+      e.chart.render();
+
+    }
+  </script>
+
+</head>
+
+<body class="bg-green-50">
+  {% include 'base/navbar.html' %}
+  <div class="mx-auto my-auto bg-red h-dvh">
+    {% block content %}
+    {% endblock content %}
+  </div>
+
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    var vectorIcon = document.getElementById("vectorIcon");
+    if (vectorIcon) {
+      vectorIcon.addEventListener("click", function (e) {
+        // Please sync "dark theme design dashboard main 3" to the project
+      });
+    }
+
+    var frameLink = document.getElementById("frameLink");
+    if (frameLink) {
+      frameLink.addEventListener("click", function (e) {
+        // Please sync "dark theme design new entry 1" to the project
+      });
+    }
+
+    const htmlElement = document.documentElement;
+
+    const handleThemeToggle = () => {
+      console.log(htmlElement);
+      htmlElement.classList.toggle("dark");
+    };
+
+    document
+      .getElementById("theme-toggle")
+      .addEventListener("click", handleThemeToggle);
+  </script>
+  <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,230 @@
+{% extends 'base/main.html' %}
+
+
+
+{% block content %}
+
+<!-- dashboard start  -->
+<div
+class="w-full flex bg-red-300 dark:bg-gray-400 h-screentext-white font-outfit"
+>
+<!-- sidebar  -->
+<div
+  class="dark:bg-gray-700 bg-gray-100 w-20 md:w-1/5 h-screen overflow-hidden flex flex-col justify-between border-r-4 border-gray-700"
+>
+  <div>
+    <!-- logo  -->
+    <div
+      class="flex justify-center px-2 py-4 items-center gap-1 text-white"
+    >
+      <div
+        class="[filter:blur(4px)] rounded-[50px] [background:linear-gradient(180deg,_#d9d9d9,_#737373_53%)] w-[3rem] h-[3rem] border-[4px] border-solid border-gray-400 mb-4"
+      ></div>
+      <p class="hidden md:block">Admin</p>
+    </div>
+    <!-- logo ends  -->
+    <!-- nav items side bar  -->
+   
+   
+   
+    <div>
+      <div
+        class="bg-gray-400 flex items-center justify-center gap-4 p-4 mb-1"
+      >
+        <img
+          class="max-w-full overflow-hidden max-h-full"
+          alt=""
+          src="/public/group.svg"
+        />
+        <div
+          class="hidden md:block font-semibold bg-gray-400 text-white text-center"
+        >
+        <a href={% url 'admin' %}>Dashboard</a>
+        </div>
+      </div>
+      <div
+        class="bg-gray-400 flex items-center justify-center gap-4 p-4 mb-1"
+      >
+        <img
+          class="max-w-full overflow-hidden max-h-full"
+          alt=""
+          src="/public/basileditoutline.svg"
+        />
+        <div
+          class="hidden md:block font-semibold bg-gray-400 text-white text-center"
+        >
+        <a href={% url 'all-users' %}>Users</a>
+        </div>
+      </div>
+      <!-- <div class="bg-gray-400 flex items-center justify-center gap-4 p-4">
+        <img
+          class="max-w-full overflow-hidden max-h-full"
+          alt=""
+          src="/public/basilfiledownloadoutline.svg"
+        />
+        <div
+          class="hidden md:block font-semibold bg-gray-400 text-white text-center"
+        >
+        <a href={% url 'admin' %}>Reports</a>
+        </div>
+      </div> -->
+    </div>
+
+
+
+
+  </div>
+  <!-- logout setting   -->
+  <div class="mb-8">
+    <div class="flex items-center justify-center gap-4 text-red-500 mb-4">
+      <div class="hidden md:block font-semibold">
+        <a href={% url 'logout_user' %}>Logout</a>
+      </div>
+      <img
+        class="w-4 overflow-hidden max-h-full"
+        alt=""
+        src="/public/vector.svg"
+      />
+    </div>
+    <div class="flex items-center justify-center gap-4 text-white">
+      <div class="font-semibold hidden md:block">settings</div>
+      <img
+        class="w-4 overflow-hidden max-h-full"
+        alt=""
+        src="/public/mingcuteusersettingfill.svg"
+      />
+    </div>
+  </div>
+</div>
+<!-- right section    -->
+<div class="w-4/5 flex flex-col justify-between h-screen overflow-scroll">
+  <!-- header  -->
+  <div
+    class="bg-gray-800 w-full flex flex-col md:flex-row items-start md:items-center justify-between md:px-6 md:py-2 p-2 text-white"
+  >
+    <p class="text-xl mb-4 md:mb-0 text-center w-full">Day Book</p>
+    <div class="flex items-center justify-between md:gap-10 w-full">
+      <!-- icons  -->
+      <div class="flex flex-row items-start justify-start gap-4">
+        <img
+          class="w-4 relative h-4 cursor-pointer"
+          alt=""
+          src="/public/vector1.svg"
+          id="vectorIcon"
+        />
+
+        <img
+          class="w-4 relative h-4 overflow-hidden cursor-pointer"
+          alt=""
+          src="/public/fluentdarktheme20filled.svg"
+          id="theme-toggle"
+        />
+
+        <img
+          class="w-4 relative h-4 overflow-hidden cursor-pointer"
+          alt=""
+          src="/public/basilnotificationonoutline.svg"
+        />
+      </div>
+      <!-- employee details  -->
+      <div class="flex flex-col items-center justify-center">
+        <img
+          class="rounded-[100px] w-8 h-8 object-cover"
+          alt=""
+          src="/public/2151064043-1@2x.png"
+        />
+
+        <p class="text-sm text-white">{{request.user.username}}</p>
+        <p class="text-sm text-white">abcde@gmail.com</p>
+      </div>
+    </div>
+  </div>
+  <!-- main section  -->
+  <div
+    class="bg-gray-800 m-1 py-8 px-12 text-white h-full flex flex-col justify-center items-center rounded-md"
+  >
+
+
+
+  {% if report %}
+  <table class="table-auto">
+    <thead>
+      <tr>
+        <th class="px-4 py-2">Date</th>
+        <th class="px-4 py-2">Creator</th>
+        <th class="px-4 py-2">Category</th>
+        <th class="px-4 py-2">Payment</th>
+        <th class="px-4 py-2">Edit</th>
+        <th class="px-4 py-2">Approve</th>
+        <th class="px-4 py-2">Reject</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for rpt in report %}
+      <tr>
+        <td class="border px-4 py-2">{{rpt.created_at|date:"Y-m-d H:i"}}</td>
+        <td class="border px-4 py-2"> {{rpt.owner.username}}</td>
+        <td class="border px-4 py-2">{{rpt.category.name}}</td>
+        <td class="border px-4 py-2">{{rpt.payments}}</td>
+        <td class="border px-4 py-2">
+          <a href={% url 'report-edit' rpt.pk %}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+              </svg>
+        </a>
+        </td>
+        <td class="border px-4 py-2">
+          <a href="">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="13" height="13" viewBox="0 0 256 256" xml:space="preserve">
+
+              <defs>
+              </defs>
+              <g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;" transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)" >
+                <path d="M 60.879 31.299 c -6.173 5.123 -11.7 10.614 -16.569 16.37 h -0.021 h -0.001 c -2.531 -4.833 -5.459 -9.591 -8.752 -14.248 l -14.077 4.832 c 6.182 6.566 11.571 13.473 16.011 20.67 l 6.243 10.118 l 4.665 -9.973 c 4.161 -8.895 9.903 -17.532 17.283 -25.655 c 7.361 -8.13 13.293 -13.679 23.373 -20.676 C 77.638 18.82 70.1 23.623 60.879 31.299 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                <path d="M 76.876 29.21 c 2.368 4.761 3.708 10.121 3.708 15.79 C 80.584 64.62 64.62 80.584 45 80.584 S 9.416 64.62 9.416 45 S 25.379 9.416 45 9.416 c 9.278 0 17.734 3.572 24.075 9.409 c 2.586 -1.794 5.273 -3.557 8.057 -5.287 C 68.958 5.192 57.576 0 45 0 C 20.187 0 0 20.187 0 45 s 20.187 45 45 45 s 45 -20.188 45 -45 c 0 -8.039 -2.129 -15.586 -5.838 -22.125 C 81.592 24.964 79.173 27.079 76.876 29.21 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+              </g>
+              </svg>
+          </a>
+        </td>
+        <td class="border px-4 py-2">
+          <a href="">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="13" height="13" viewBox="0 0 256 256" xml:space="preserve">
+
+              <defs>
+              </defs>
+              <g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;" transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)" >
+                <path d="M 81 41.6 H 70 c -1.1 0 -2 0.9 -2 2 s 0.9 2 2 2 h 11 c 1.1 0 2 -0.9 2 -2 S 82.1 41.6 81 41.6 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                <path d="M 81.7 28.4 H 70 c -1.1 0 -2 0.9 -2 2 s 0.9 2 2 2 h 11.7 c 1.1 0 2 -0.9 2 -2 S 82.8 28.4 81.7 28.4 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                <path d="M 74.1 15.2 h -7 c -1.1 0 -2 0.9 -2 2 s 0.9 2 2 2 h 7 c 1.1 0 2 -0.9 2 -2 S 75.2 15.2 74.1 15.2 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                <path d="M 48.7 2 c -6.5 0 -13 1.6 -17.1 4.3 c -1.3 0.9 -2.8 1.4 -4.2 1.4 h -3.5 c -1.1 0 -2 0.9 -2 2 s 0.9 2 2 2 h 3.5 c 2.2 0 4.4 -0.7 6.4 -2 c 3.6 -2.4 9.8 -3.8 15.8 -3.6 l 24.5 0 c 2.2 0 4 1.8 4 4 v 1.2 c 0 2.2 -1.8 4 -4 4 c -1.1 0 -2 0.9 -2 2 s 0.9 2 2 2 H 82 c 2.2 0 4 1.8 4 4 v 1.2 c 0 2.2 -1.8 4 -4 4 h -0.3 c -1.1 0 -2 0.9 -2 2 s 0.9 2 2 2 c 2.2 0 4 1.8 4 4 v 1.2 c 0 2.2 -1.8 4 -4 4 H 81 c -1.1 0 -2 0.9 -2 2 s 0.9 2 2 2 c 2.2 0 4 1.8 4 4 v 1.2 c 0 2.2 -1.8 4 -4 4 l -23.3 0 c 0 0 0 0 0 0 c -0.7 0 -1.4 0.4 -1.7 1 c -0.4 0.6 -0.4 1.4 0 2 c 2.4 4.1 3.1 15.1 0.5 21.6 c -1 2.5 -2.4 4.1 -4.1 4.5 c -0.2 0 -0.4 0 -0.5 -0.1 c -0.2 -0.2 -0.4 -0.4 -0.4 -0.7 C 50 69.5 41.4 50.1 30.8 49.5 c 0 0 -0.1 0 -0.1 0 h -6.8 c -1.1 0 -2 0.9 -2 2 s 0.9 2 2 2 h 6.7 c 6.8 0.5 15.3 15.6 16.9 30.1 c 0.2 1.4 0.9 2.7 2.1 3.6 c 1.1 0.8 2.5 1 3.8 0.6 c 2.9 -0.8 5.2 -3.2 6.7 -6.9 c 2.6 -6.5 2.4 -16.2 0.5 -22.1 l 20.3 0 c 4.4 0 8 -3.6 8 -8 v -1.2 c 0 -2.2 -0.9 -4.2 -2.4 -5.7 c 1.9 -1.5 3.1 -3.7 3.1 -6.3 v -1.2 c 0 -2.3 -1 -4.4 -2.6 -5.9 c 1.7 -1.5 2.8 -3.7 2.8 -6.1 v -1.2 c 0 -4.4 -3.6 -8 -8 -8 h -1 c 0.7 -1.2 1.1 -2.5 1.1 -4 V 10 c 0 -4.4 -3.6 -8 -8 -8 H 49.7 C 49.4 2 49 2 48.7 2 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                <path d="M 21.4 2 H 4.5 C 2 2 0 4.1 0 6.6 v 47.8 c 0 2.5 2 4.5 4.5 4.5 h 16.9 c 2.5 0 4.5 -2 4.5 -4.5 V 6.6 C 25.9 4.1 23.9 2 21.4 2 z M 4.5 54.9 c -0.3 0 -0.5 -0.2 -0.5 -0.5 V 6.6 C 4 6.3 4.2 6 4.5 6 h 16.9 c 0.3 0 0.5 0.2 0.5 0.5 v 47.8 c 0 0.3 -0.2 0.5 -0.5 0.5 H 4.5 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                <path d="M 13 7.9 c -1.1 0 -2 0.9 -2 2 v 6.5 c 0 1.1 0.9 2 2 2 s 2 -0.9 2 -2 V 9.9 C 15 8.8 14.1 7.9 13 7.9 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+              </g>
+              </svg>
+          </a>
+        </td>
+      </tr>
+      {% endfor   %}
+      
+
+    </tbody>
+  </table>
+
+  <div class="flex flex-row items-center justify-normal my-3">
+    <a href={% url 'new-report' %}>
+      <button type="submit" class="bg-green-700 cursor-pointer text-white sm:px-10 py-1.5 items-center justify-center rounded-full text-base font-roboto ml-auto mr-12">Add Report</button>
+    </a>
+   <a href={% url 'export' %}>
+     <button type="submit" class="bg-green-700 cursor-pointer text-white sm:px-10 py-1.5 items-center justify-center rounded-full text-base font-roboto ml-auto mr-12">Download Summary</button>
+   </a>
+  </div>
+
+  </div>
+
+  {% endif %}
+</div>
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,66 @@
+{% load static %}
+
+ <!-- Navigation-->
+ <!-- <nav class="navbar navbar-expand-lg navbar-light sticky-top" id="mainNav">
+  <div class="container px-4 px-lg-5">
+      <a class="navbar-brand" href="index.html">Start Bootstrap</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          Menu
+          <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ms-auto py-4 py-lg-0">
+              <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="index.html">Home</a></li>
+              <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="about.html">About</a></li>
+              <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="post.html">Sample Post</a></li>
+              <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="contact.html">Contact</a></li>
+          </ul>
+      </div>
+  </div>
+</nav> -->
+
+
+
+
+<nav class="navbar sticky-top bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href={% url 'home' %}>
+        <img src="{% static 'img/logo.jpg' %}" alt="Vado Dev" width="60" height="50">
+      </a>
+
+      
+      <ul class="nav justify-content-end">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href={% url 'home' %}>Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href={% url 'portfolio' %}>Portfolio</a>
+        </li>
+        {% if request.user.is_authenticated %}
+        <li class="nav-item">
+            <a class="nav-link" href={% url 'new-blog' %}>New Blog</a>
+          </li>
+        
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              {{request.user.username}}
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href={% url 'logout_user' %}>Logout</a></li>
+              
+            </ul>
+          </div>
+        {% else %}
+
+        <li class="nav-item">
+          <a class="nav-link" href={% url 'login' %}>Login</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href={% url 'register' %}>register</a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+    
+  </nav>

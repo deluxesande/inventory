@@ -1,0 +1,226 @@
+{% extends 'base/main.html' %}
+
+
+
+{% block content %}
+
+<!-- dashboard start  -->
+<div
+class="w-full flex bg-red-300 dark:bg-gray-400 h-screentext-white font-outfit"
+>
+<!-- sidebar  -->
+<div
+  class="dark:bg-gray-700 bg-gray-100 w-20 md:w-1/5 h-screen overflow-hidden flex flex-col justify-between border-r-4 border-gray-700"
+>
+  <div>
+    <!-- logo  -->
+    <div
+      class="flex justify-center px-2 py-4 items-center gap-1 text-white"
+    >
+      <div
+        class="[filter:blur(4px)] rounded-[50px] [background:linear-gradient(180deg,_#d9d9d9,_#737373_53%)] w-[3rem] h-[3rem] border-[4px] border-solid border-gray-400 mb-4"
+      ></div>
+      <p class="hidden md:block">Admin</p>
+    </div>
+    <!-- logo ends  -->
+    <!-- nav items side bar  -->
+   
+   
+   
+    <div>
+      <div
+        class="bg-gray-400 flex items-center justify-center gap-4 p-4 mb-1"
+      >
+        <img
+          class="max-w-full overflow-hidden max-h-full"
+          alt=""
+          src="/public/group.svg"
+        />
+        <div
+          class="hidden md:block font-semibold bg-gray-400 text-white text-center"
+        >
+        <a href={% url 'admin' %}>Dashboard</a>
+        </div>
+      </div>
+      <div
+        class="bg-gray-400 flex items-center justify-center gap-4 p-4 mb-1"
+      >
+        <img
+          class="max-w-full overflow-hidden max-h-full"
+          alt=""
+          src="/public/basileditoutline.svg"
+        />
+        <div
+          class="hidden md:block font-semibold bg-gray-400 text-white text-center"
+        >
+        <a href={% url 'all-users' %}>Users</a>
+        </div>
+      </div>
+      <!-- <div class="bg-gray-400 flex items-center justify-center gap-4 p-4">
+        <img
+          class="max-w-full overflow-hidden max-h-full"
+          alt=""
+          src="/public/basilfiledownloadoutline.svg"
+        />
+        <div
+          class="hidden md:block font-semibold bg-gray-400 text-white text-center"
+        >
+        <a href={% url 'accountant' %}>Reports</a>
+        </div>
+      </div> -->
+    </div>
+
+
+
+
+  </div>
+  <!-- logout setting   -->
+  <div class="mb-8">
+    <div class="flex items-center justify-center gap-4 text-red-500 mb-4">
+      <div class="hidden md:block font-semibold">
+        <a href={% url 'logout_user' %}>Logout</a>
+      </div>
+      <img
+        class="w-4 overflow-hidden max-h-full"
+        alt=""
+        src="/public/vector.svg"
+      />
+    </div>
+    <div class="flex items-center justify-center gap-4 text-white">
+      <div class="font-semibold hidden md:block">settings</div>
+      <img
+        class="w-4 overflow-hidden max-h-full"
+        alt=""
+        src="/public/mingcuteusersettingfill.svg"
+      />
+    </div>
+  </div>
+</div>
+<!-- right section    -->
+<div class="w-4/5 flex flex-col justify-between h-screen overflow-scroll">
+  <!-- header  -->
+  <div
+    class="bg-gray-800 w-full flex flex-col md:flex-row items-start md:items-center justify-between md:px-6 md:py-2 p-2 text-white"
+  >
+    <p class="text-xl mb-4 md:mb-0 text-center w-full">Day Book</p>
+    <div class="flex items-center justify-between md:gap-10 w-full">
+      <!-- icons  -->
+      <div class="flex flex-row items-start justify-start gap-4">
+        <img
+          class="w-4 relative h-4 cursor-pointer"
+          alt=""
+          src="/public/vector1.svg"
+          id="vectorIcon"
+        />
+
+        <img
+          class="w-4 relative h-4 overflow-hidden cursor-pointer"
+          alt=""
+          src="/public/fluentdarktheme20filled.svg"
+          id="theme-toggle"
+        />
+
+        <img
+          class="w-4 relative h-4 overflow-hidden cursor-pointer"
+          alt=""
+          src="/public/basilnotificationonoutline.svg"
+        />
+      </div>
+      <!-- employee details  -->
+      <div class="flex flex-col items-center justify-center">
+        <img
+          class="rounded-[100px] w-8 h-8 object-cover"
+          alt=""
+          src="/public/2151064043-1@2x.png"
+        />
+
+        <p class="text-sm text-white">{{request.user.username}}</p>
+        <p class="text-sm text-white">abcde@gmail.com</p>
+      </div>
+    </div>
+  </div>
+  <!-- main section  -->
+  <div
+    class="bg-gray-800 m-1 py-8 px-12 text-white h-full flex flex-col justify-center items-center rounded-md"
+  >
+
+  <a href={% url 'create-user'  %}> 
+    <button type="submit" class="bg-green-700 cursor-pointer text-white sm:px-10 py-1.5 items-center justify-center rounded-full text-base font-roboto ml-auto mr-12">Add User</button>
+  </a>
+
+  {% if users %}
+  <table class="table-auto">
+    <thead>
+      <tr>
+        <th class="px-4 py-2">Member Since</th>
+        <th class="px-4 py-2">Name</th>
+        <th class="px-4 py-2">Email</th>
+        <th class="px-4 py-2">Member type</th>
+        <!-- <th class="px-4 py-2">Payment</th> -->
+        <th class="px-4 py-2">Edit</th>
+        <th class="px-4 py-2">Permissions</th>
+        <th class="px-4 py-2">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+      <tr>
+        <td class="border px-4 py-2">{{user.created_at|date:"Y-m-d H:i"}}</td>
+        <td class="border px-4 py-2"> {{user.username}}</td>
+        <td class="border px-4 py-2">{{user.email}}</td>
+        <td class="border px-4 py-2">{{user.groups}}</td>
+        <td class="border px-4 py-2">
+          <!--  -->
+          <a href={% url 'edit-user' user.pk %}> 
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+              </svg>
+        </a>
+        </td>
+        <td class="border px-4 py-2">
+          <a href="">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="13" height="13" viewBox="0 0 256 256" xml:space="preserve">
+
+              <defs>
+              </defs>
+              <g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;" transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)" >
+                <path d="M 40.167 49.204 c -13.565 0 -24.602 -11.037 -24.602 -24.602 S 26.601 0 40.167 0 c 13.566 0 24.602 11.037 24.602 24.602 S 53.732 49.204 40.167 49.204 z M 40.167 6 c -10.257 0 -18.602 8.345 -18.602 18.602 s 8.345 18.602 18.602 18.602 s 18.602 -8.345 18.602 -18.602 S 50.424 6 40.167 6 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                <path d="M 46.435 90 H 9.092 c -1.657 0 -3 -1.343 -3 -3 v -9.722 c 0 -18.789 15.286 -34.074 34.074 -34.074 c 4.781 0 9.406 0.971 13.747 2.888 c 1.516 0.669 2.202 2.439 1.532 3.956 c -0.669 1.515 -2.437 2.201 -3.956 1.532 c -3.571 -1.576 -7.381 -2.376 -11.323 -2.376 c -15.48 0 -28.074 12.594 -28.074 28.074 V 84 h 34.342 c 1.657 0 3 1.343 3 3 S 48.092 90 46.435 90 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                <path d="M 76.678 67.535 c -1.657 0 -3 -1.343 -3 -3 v -6.199 c 0 -2.907 -2.365 -5.272 -5.271 -5.272 h -1.482 c -2.906 0 -5.271 2.365 -5.271 5.272 v 6.199 c 0 1.657 -1.343 3 -3 3 s -3 -1.343 -3 -3 v -6.199 c 0 -6.216 5.057 -11.272 11.271 -11.272 h 1.482 c 6.215 0 11.271 5.057 11.271 11.272 v 6.199 C 79.678 66.192 78.335 67.535 76.678 67.535 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                <path d="M 79.656 64.535 H 55.675 c -1.668 0 -3.021 1.352 -3.021 3.021 v 19.423 c 0 1.668 1.352 3.021 3.021 3.021 h 23.981 c 1.668 0 3.021 -1.352 3.021 -3.021 V 67.556 C 82.676 65.888 81.324 64.535 79.656 64.535 z M 70.665 78.581 c 0 1.657 -1.343 3 -3 3 s -3 -1.343 -3 -3 v -1.809 c 0 -1.657 1.343 -3 3 -3 s 3 1.343 3 3 V 78.581 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+              </g>
+              </svg>
+          </a>
+        </td>
+        <td class="border px-4 py-2">
+          <a href={% url 'delete-user' user.pk %}> 
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="13" height="13" viewBox="0 0 256 256" xml:space="preserve">
+
+              <defs>
+              </defs>
+              <g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;" transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)" >
+                <path d="M 76.777 2.881 H 57.333 V 2.412 C 57.333 1.08 56.253 0 54.921 0 H 35.079 c -1.332 0 -2.412 1.08 -2.412 2.412 v 0.469 H 13.223 c -1.332 0 -2.412 1.08 -2.412 2.412 v 9.526 c 0 1.332 1.08 2.412 2.412 2.412 h 63.554 c 1.332 0 2.412 -1.08 2.412 -2.412 V 5.293 C 79.189 3.961 78.109 2.881 76.777 2.881 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                <path d="M 73.153 22.119 H 16.847 c -1.332 0 -2.412 1.08 -2.412 2.412 v 63.057 c 0 1.332 1.08 2.412 2.412 2.412 h 56.306 c 1.332 0 2.412 -1.08 2.412 -2.412 V 24.531 C 75.565 23.199 74.485 22.119 73.153 22.119 z M 33.543 81.32 c 0 1.332 -1.08 2.412 -2.412 2.412 h -2.245 c -1.332 0 -2.412 -1.08 -2.412 -2.412 V 30.799 c 0 -1.332 1.08 -2.412 2.412 -2.412 h 2.245 c 1.332 0 2.412 1.08 2.412 2.412 V 81.32 z M 48.535 81.32 c 0 1.332 -1.08 2.412 -2.412 2.412 h -2.245 c -1.332 0 -2.412 -1.08 -2.412 -2.412 V 30.799 c 0 -1.332 1.08 -2.412 2.412 -2.412 h 2.245 c 1.332 0 2.412 1.08 2.412 2.412 V 81.32 z M 63.526 81.32 c 0 1.332 -1.08 2.412 -2.412 2.412 h -2.245 c -1.332 0 -2.412 -1.08 -2.412 -2.412 V 30.799 c 0 -1.332 1.08 -2.412 2.412 -2.412 h 2.245 c 1.332 0 2.412 1.08 2.412 2.412 V 81.32 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+              </g>
+              </svg>
+          </a>
+        </td>
+        <!-- <td class="border px-4 py-2">Reject</td> -->
+      </tr>
+      {% endfor   %}
+      
+
+    </tbody>
+  </table>
+
+
+
+  </div>
+
+  {% endif %}
+</div>
+</div>
+
+
+
+{% endblock %}

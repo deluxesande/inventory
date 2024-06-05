@@ -1,0 +1,77 @@
+{% extends 'base/main.html' %}
+
+{% block title %}
+Collect Feedback
+{% endblock %}
+
+{% block content %}
+{% include 'base/messages.html' %}
+<div class="container mx-auto px-4">
+    <!-- Feedback Form -->
+    <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-4">
+        <div class="px-4 py-5 sm:px-6">
+            <h3 class="text-lg leading-6 font-medium text-gray-900">
+                Feedback Details
+            </h3>
+        </div>
+        <div class="border-t border-gray-200">
+            <dl>
+                <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500">
+                        Feedback ID
+                    </dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                        {{ feedback.pk }}
+                    </dd>
+                </div>
+                <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500">
+                        Reporter
+                    </dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                        {{ feedback.reporter }}
+                    </dd>
+                </div>
+                <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500">
+                        Message
+                    </dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                        {{ feedback.content }}
+                    </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+
+    <!-- Report Details -->
+    <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+        <div class="px-4 py-5 sm:px-6">
+            <h3 class="text-lg leading-6 font-medium text-gray-900">
+                Report Details
+            </h3>
+        </div>
+        <form class="border-t border-gray-200 flex flex-col items-center justify-center mb-10" method="POST" action="{% url 'view_feedback' feedback.pk %}">
+            {% csrf_token %}
+            <div class="mt-10"></div>
+            {% for field in form %}
+            <div class="mb-4 w-1/2">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="{{ field.id_for_label }}">
+                    {{ field.label }}
+                </label>
+                {% if field.name == 'category' or field.name == 'subcategory' %}
+                    <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="{{ field.id_for_label }}">
+                        {% for choice in field.field.choices %}
+                            <option value="{{ choice.0 }}" {% if field.value == choice.0 %}selected{% endif %}>{{ choice.1 }}</option>
+                        {% endfor %}
+                    </select>
+                {% else %}
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="{{ field.id_for_label }}" type="text" name="{{ field.name }}" value="{{ field.value }}">
+                {% endif %}
+            </div>
+        {% endfor %}
+        <button class='bg-blue-700 cursor-pointer text-white sm:px-10 py-1.5 items-center justify-center rounded-full text-base font-roboto w-1/2 text-center'>Edit</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
