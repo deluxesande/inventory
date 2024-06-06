@@ -15,4 +15,5 @@ urlpatterns = [
     path('reports/feedback/resolve/<int:id>', views.resolve_feedback, name='resolve_feedback'),
     path('export', views.export_to_excel, name='export'),
     path('export/<int:id>', views.export_single_report_to_excel, name='export_report'),
+    path('admin/user/<int:id>', views.change_user_type, name='change_user_type'),
 ]

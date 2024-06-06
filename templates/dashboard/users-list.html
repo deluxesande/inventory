@@ -1,9 +1,8 @@
 {% extends 'base/admin_main.html' %}
-
+{% load static %}
 
 
 {% block content %}
-
 <!-- dashboard start  -->
 <div class="w-full flex bg-red-300 dark:bg-gray-400 h-screentext-white font-outfit">
   <!-- sidebar  -->
@@ -24,29 +23,17 @@
 
       <div>
         <div class="bg-gray-400 flex items-center justify-center gap-4 p-4 mb-1">
-          <img class="max-w-full overflow-hidden max-h-full" alt="" src="/public/group.svg" />
+          <img class="max-w-full overflow-hidden max-h-full" alt="" src="{% static 'images/group.svg' %}" />
           <div class="hidden md:block font-semibold bg-gray-400 text-white text-center">
             <a href="{% url 'admin' %}">Dashboard</a>
           </div>
         </div>
         <div class="bg-gray-400 flex items-center justify-center gap-4 p-4 mb-1">
-          <img class="max-w-full overflow-hidden max-h-full" alt="" src="/public/basileditoutline.svg" />
+          <img class="max-w-full overflow-hidden max-h-full" alt="" src="{% static 'images/basileditoutline.svg' %}" />
           <div class="hidden md:block font-semibold bg-gray-400 text-white text-center">
             <a href="{% url 'all-users' %}">Users</a>
           </div>
         </div>
-        <!-- <div class="bg-gray-400 flex items-center justify-center gap-4 p-4">
-        <img
-          class="max-w-full overflow-hidden max-h-full"
-          alt=""
-          src="/public/basilfiledownloadoutline.svg"
-        />
-        <div
-          class="hidden md:block font-semibold bg-gray-400 text-white text-center"
-        >
-        <a href={% url 'accountant' %}>Reports</a>
-        </div>
-      </div> -->
       </div>
 
 
@@ -59,11 +46,11 @@
         <div class="hidden md:block font-semibold">
           <a href="{% url 'logout_user' %}">Logout</a>
         </div>
-        <img class="w-4 overflow-hidden max-h-full" alt="" src="/public/vector.svg" />
+        <img class="w-4 overflow-hidden max-h-full" alt="" src="{% static 'images/vector.svg' %}" />
       </div>
       <div class="flex items-center justify-center gap-4 text-white">
         <div class="font-semibold hidden md:block">settings</div>
-        <img class="w-4 overflow-hidden max-h-full" alt="" src="/public/mingcuteusersettingfill.svg" />
+        <img class="w-4 overflow-hidden max-h-full" alt="" src="{% static 'images/mingcuteusersettingfill.svg' %}" />
       </div>
     </div>
   </div>
@@ -76,20 +63,19 @@
       <div class="flex items-center justify-between md:gap-10 w-full">
         <!-- icons  -->
         <div class="flex flex-row items-start justify-start gap-4">
-          <img class="w-4 relative h-4 cursor-pointer" alt="" src="/public/vector1.svg" id="vectorIcon" />
+          <img class="w-4 relative h-4 cursor-pointer" alt="" src="{%static 'images/vector1.svg' %}" id="vectorIcon" />
 
-          <img class="w-4 relative h-4 overflow-hidden cursor-pointer" alt="" src="/public/fluentdarktheme20filled.svg"
+          <img class="w-4 relative h-4 overflow-hidden cursor-pointer" alt="" src="{%static 'images/fluentdarktheme20filled.svg' %}"
             id="theme-toggle" />
 
           <img class="w-4 relative h-4 overflow-hidden cursor-pointer" alt=""
-            src="/public/basilnotificationonoutline.svg" />
+            src="{% static 'images/basilnotificationonoutline.svg' %}" />
         </div>
         <!-- employee details  -->
         <div class="flex flex-col items-center justify-center">
-          <img class="rounded-[100px] w-8 h-8 object-cover" alt="" src="/public/2151064043-1@2x.png" />
+          <img class="rounded-[100px] w-8 h-8 object-cover" alt="" src="{% static 'images/2151064043-1@2x.png' %}" />
 
           <p class="text-sm text-white">{{request.user.username}}</p>
-          <p class="text-sm text-white">abcde@gmail.com</p>
         </div>
       </div>
     </div>
@@ -135,7 +121,7 @@
                 </a>
               </td>
               <td class="border px-4 py-2">
-                <a href="">
+                <a href="{% url 'change_user_type' user.pk %}">
                   <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
                     width="13" height="13" viewBox="0 0 256 256" xml:space="preserve">
   

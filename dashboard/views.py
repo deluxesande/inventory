@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .forms import ReportsForm
 from .models import *
@@ -320,3 +320,28 @@ def export_single_report_to_excel(request, id):
     # Save the workbook to the HttpResponse
     wb.save(response)
     return response
+
+
+
+@login_required
+@allowed_users(allowed_roles=['admin'])
+def change_user_type(request, id):
+    user = User.objects.get(id=id)
+
+    # Prevent the admin from changing their own user type
+    if request.user.user_type == "admin" and user == request.user:
+        return redirect('all-users')
+
+    if request.method == 'POST':
+        # Get the new user type from the POST data
+        new_user_type = request.POST.get('user_type')
+
+        # Change the user's type
+        user.user_type = new_user_type
+        user.save()
+
+        messages.success(request, "User type updated successfully.")
+        return redirect('all-users')
+
+    else:
+        return render(request, 'dashboard/change_user_type.html', {'user': user})
