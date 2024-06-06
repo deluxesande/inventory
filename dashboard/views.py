@@ -179,6 +179,7 @@ def approve_report(request, id):
     # Approve the report
     report.is_approved = True
     report.modification_approved = False
+    report.for_edit = False
     report.approved_by = request.user
     report.save()
 
@@ -286,6 +287,7 @@ def report_edit(request, id):
                 report.receipts = receipts
                 report.is_approved = True
                 report.modification_approved = False
+                report.for_edit = False
 
                 report.payments = payments
                 report.save()
