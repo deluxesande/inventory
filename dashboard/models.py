@@ -26,6 +26,9 @@ class Reports(TrackingModel):
     for_edit = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     is_approved = models.BooleanField(default=False)  # New field
+    approved_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='approved_by', null=True)
+    modification_approved = models.BooleanField(default=False)
+    modification_approved_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name='modifications_approved_by', null=True, blank=True)
 
 
     def __str__(self):

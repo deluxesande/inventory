@@ -33,6 +33,13 @@
             <a href="{% url 'all-users' %}">Users</a>
           </div>
         </div>
+        <div class="bg-gray-400 flex items-center justify-center gap-4 p-4 mb-1">
+          <img class="max-w-full overflow-hidden max-h-full" alt=""
+                src="{% static 'images/basilfiledownloadoutline.svg' %}" />
+          <div class="hidden md:block font-semibold bg-gray-400 text-white text-center">
+            <a href="{% url 'modifications_requests' %}">Requests</a>
+          </div>
+        </div>
       </div>
 
 
@@ -174,7 +181,7 @@
                 </a>
               </td>
               <td class="border px-4 py-2">
-                <a href="{% url 'export_report' rpt.pk %}" class="p-2 bg-green-700 cursor-pointer">Download</a>
+                <a href="{% url 'export_report' rpt.pk %}" class="p-1 bg-green-700 cursor-pointer">Download</a>
               </td>
             </tr>
             {% endfor %}

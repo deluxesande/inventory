@@ -257,8 +257,12 @@ def delete_user(request, id):
     # Make sure only authorized users can delete
     if request.user.is_authenticated:
         user_to_delete = get_object_or_404(User, pk=id)
-        user_to_delete.delete()
-        messages.add_message(request, messages.SUCCESS, "User details updated successfully!")
+        if user_to_delete == request.user:
+            messages.add_message(request, messages.WARNING, "You can't delete yourself!")
+            return redirect(reverse('all-users'))
+        else:
+            user_to_delete.delete()
+            messages.add_message(request, messages.SUCCESS, "User details updated successfully!")
     else:
         messages.add_message(request, messages.WARNING, "Error deleting user")
 

@@ -1,0 +1,49 @@
+{% extends 'base/main.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<!-- main section  -->
+<div class="bg-gray-800 m-1 py-8 px-12 text-white h-full flex flex-col justify-start items-center rounded-md">
+    <div class="overflow-y-auto ">
+        {% if reports %}
+        <table class="table-auto">
+            <thead>
+                <tr>
+                    <th class="px-4 py-2">Date</th>
+                    <th class="px-4 py-2">Description</th>
+                    <th class="px-4 py-2">Creator</th>
+                    <th class="px-4 py-2">Category</th>
+                    <th class="px-4 py-2">Payment</th>
+                    <th class="px-4 py-2"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for rpt in reports %}
+                <tr>
+                    <td class="border px-4 py-2">{{rpt.created_at|date:"Y-m-d H:i"}}</td>
+                    <td class="border px-4 py-2">{{rpt.description}}</td>
+                    <td class="border px-4 py-2"> {{rpt.owner.username}}</td>
+                    <td class="border px-4 py-2">{{rpt.category.name }}</td>
+                    <td class="border px-4 py-2">{{rpt.payments}}</td>
+                    <td class="border px-4 py-2">
+                        {% if rpt.modification_approved %}
+                            <a href="{% url 'report-edit' rpt.pk %}" class="p-1 bg-yellow-500 cursor-pointer">Edit Report</a>
+                        {% else %}
+                            <a href="{% url 'request_modification' rpt.pk %}" class="p-1 bg-green-700 cursor-pointer">Request Modification</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+
+
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+</div>
+
+
+
+{% endblock %}

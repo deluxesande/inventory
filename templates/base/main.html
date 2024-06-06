@@ -122,11 +122,13 @@
               <a href="{% url 'create_report'%}"
                 class="hidden md:block font-semibold bg-gray-400 text-white text-center">Add Record</a>
             </div>
+            {% if request.user.user_type == "manager" %}
             <div class="bg-gray-400 flex items-center justify-center gap-4 p-4 mb-1">
               <img class="max-w-full overflow-hidden max-h-full" alt=""
                 src="{% static 'images/basilfiledownloadoutline.svg' %}" />
-              <div class="hidden md:block font-semibold bg-gray-400 text-white text-center">Records</div>
+              <a href="{% url 'approved_reports' request.user.pk %}" class="hidden md:block font-semibold bg-gray-400 text-white text-center">Records</a>
             </div>
+            {% endif %}
           </div>
         </div>
         <!-- logout setting   -->

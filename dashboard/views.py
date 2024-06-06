@@ -55,6 +55,22 @@ def admin(request):
     }
     return render(request, "dashboard/admin.html", context)
 
+@allowed_users(allowed_roles=["admin"])
+@login_required
+def get_all_modification_requests(request):
+    reports = Reports.objects.filter(for_edit=True, modification_approved=False).order_by("created_at")
+    return render(request, "dashboard/modification_requests.html", {"reports": reports})
+
+@login_required
+@allowed_users(allowed_roles=['admin'])
+def approve_modification(request, id):
+    report = get_object_or_404(Reports, id=id)
+    report.modification_approved = True
+    report.modification_approved_by = request.user
+    report.save()
+
+    messages.success(request, "Modification approved.")
+    return redirect('modifications_requests')
 
 @allowed_users(allowed_roles=["accountant"])
 @login_required
@@ -124,12 +140,35 @@ def resolve_feedback(request, id):
 @login_required
 def manager(request):
     # Retrieve all PendingReports instances where is_approved is False
-    pending_reports = Reports.objects.filter(is_approved=False).order_by("created_at")
+    pending_reports = Reports.objects.filter(is_approved=False, for_edit=False).order_by("created_at")
 
     # Pass the pending_reports to the template
     return render(
         request, "dashboard/manager.html", {"pending_reports": pending_reports}
     )
+
+@allowed_users(allowed_roles=["manager"])
+@login_required
+def reports_approved_by_manager(request, id):
+    # Retrieve all PendingReports instances where is_approved is False
+    reports = Reports.objects.filter(approved_by=id).order_by("created_at")
+
+    # Pass the pending_reports to the template
+    return render(
+        request, "dashboard/manager_reports.html", {"reports": reports}
+    )
+
+@login_required
+@allowed_users(allowed_roles=['manager'])
+def request_modification_approval(request, id):
+    report = get_object_or_404(Reports, id=id)
+
+    report.for_edit = True
+    report.save()
+
+    messages.success(request, "Report marked for edit.")
+    return redirect('approved_reports', id=request.user.id)
+
 
 @allowed_users(allowed_roles=["manager", "admin"])
 @login_required
@@ -139,6 +178,8 @@ def approve_report(request, id):
 
     # Approve the report
     report.is_approved = True
+    report.modification_approved = False
+    report.approved_by = request.user
     report.save()
 
     return HttpResponseRedirect(reverse("manager"))
@@ -220,42 +261,45 @@ def accountant_list(request):
 @login_required
 def report_edit(request, id):
     report = get_object_or_404(Reports, pk=id)
-    form = ReportsForm(instance=report)
-    context = {"report": report, "form": form}
+    if not report.is_approved or (report.is_approved and report.modification_approved):
+    
+        form = ReportsForm(instance=report)
+        context = {"report": report, "form": form}
 
-    if request.method == "POST" and request.POST.get("_method") == "PUT":
-        # Handle as PUT request
-        form = ReportsForm(request.POST, instance=report)
-        if form.is_valid():
-            # Extract form data
-            description = form.cleaned_data["description"]
-            main_category = form.cleaned_data["category"]
-            sub_category = form.cleaned_data.get("subcategory")
-            receipts = form.cleaned_data.get("receipts")
-            payments = form.cleaned_data.get("payments")
+        if request.method == "POST" and request.POST.get("_method") == "PUT":
+            # Handle as PUT request
+            form = ReportsForm(request.POST, instance=report)
+            if form.is_valid():
+                # Extract form data
+                description = form.cleaned_data["description"]
+                main_category = form.cleaned_data["category"]
+                sub_category = form.cleaned_data.get("subcategory")
+                receipts = form.cleaned_data.get("receipts")
+                payments = form.cleaned_data.get("payments")
 
-            # Create a new report instance
-            report = Reports.objects.get(pk=id)
-            report.description = description
-            report.main_category = main_category
-            report.owner = User.objects.get(username=request.user.username)
-            report.sub_category = sub_category
-            report.receipts = receipts
-            report.is_approved = True  # Add this line to approve the report
+                # Create a new report instance
+                report = Reports.objects.get(pk=id)
+                report.description = description
+                report.main_category = main_category
+                report.owner = User.objects.get(username=request.user.username)
+                report.sub_category = sub_category
+                report.receipts = receipts
+                report.is_approved = True
+                report.modification_approved = False
 
-            report.payments = payments
-            report.save()
+                report.payments = payments
+                report.save()
 
-            messages.add_message(
-                request, messages.SUCCESS, "Report Updated Successfully"
-            )
-            return HttpResponseRedirect(reverse("manager"))
-        else:
-            messages.error(request, form.errors)
+                messages.add_message(
+                    request, messages.SUCCESS, "Report Updated Successfully"
+                )
+                return HttpResponseRedirect(reverse("manager"))
+            else:
+                messages.error(request, form.errors)
 
-        return HttpResponseRedirect(reverse("report-edit", kwargs={"id": report.pk}))
+            return HttpResponseRedirect(reverse("report-edit", kwargs={"id": report.pk}))
 
-    return render(request, "dashboard/report-edit.html", context)
+        return render(request, "dashboard/report-edit.html", context)
 
 @allowed_users(allowed_roles=["manager", "admin"])
 @login_required
