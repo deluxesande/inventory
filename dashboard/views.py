@@ -137,18 +137,11 @@ def approve_report(request, id):
     # Retrieve the PendingReports instance
     report = get_object_or_404(Reports, id=id)
 
-    # Check if the user is a manager
-    if request.user.user_type == "manager":
-        # Approve the report
-        report.is_approved = True
-        report.save()
+    # Approve the report
+    report.is_approved = True
+    report.save()
 
-        return HttpResponseRedirect(reverse("manager"))
-
-    # If the user is not a manager, show an error message
-    else:
-        return HttpResponse("You are not authorized to approve reports.")
-
+    return HttpResponseRedirect(reverse("manager"))
 
 @allowed_users(allowed_roles=["manager", "admin"])
 @login_required
