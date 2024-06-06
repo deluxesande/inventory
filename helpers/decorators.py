@@ -15,9 +15,12 @@ def auth_user_should_not_access(view_func):
 def allowed_users(allowed_roles=[]):
     def decorator(view_func):
         def wrapper_func(request, *args, **kwargs):
-            if request.user.user_type not in allowed_roles:
-                # Redirect to the previous page, or to the homepage if no previous page
-                return redirect('home')
+            if request.user.is_authenticated:
+                if request.user.user_type not in allowed_roles:
+                    # Redirect to the previous page, or to the homepage if no previous page
+                    return redirect('home')
+            else:
+                return redirect('login')  # Redirect to login page if user is not authenticated
             return view_func(request, *args, **kwargs)
         return wrapper_func
     return decorator
