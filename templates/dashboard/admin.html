@@ -95,6 +95,7 @@
               <th class="px-4 py-2">Edit</th>
               <th class="px-4 py-2">Approve</th>
               <th class="px-4 py-2">Reject</th>
+              <th class="px-4 py-2"></th>
             </tr>
           </thead>
           <tbody>
@@ -171,6 +172,9 @@
                     </g>
                   </svg>
                 </a>
+              </td>
+              <td class="border px-4 py-2">
+                <a href="{% url 'export_report' rpt.pk %}" class="p-2 bg-green-700 cursor-pointer">Download</a>
               </td>
             </tr>
             {% endfor %}

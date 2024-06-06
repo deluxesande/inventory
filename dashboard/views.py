@@ -288,3 +288,35 @@ def export_to_excel(request):
     # Save the workbook to the HttpResponse
     wb.save(response)
     return response
+
+@allowed_users(allowed_roles=["manager", "admin"])
+@login_required
+def export_single_report_to_excel(request, id):
+    report = Reports.objects.get(id=id)
+
+    filename = f"Report_{id}_requested_by_{request.user.username}.xlsx"
+    response = HttpResponse(content_type="application/ms-excel")
+    response["Content-Disposition"] = f'attachment; filename={filename}'
+
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Inventory Report"
+
+    # Add headers
+    headers = ["Description", "Owner", "Receipts", "Payments", "Is_approved"]
+    ws.append(headers)
+
+    # Add data from the report
+    ws.append(
+        [
+            report.description,
+            report.owner.username,
+            report.receipts,
+            report.payments,
+            report.is_approved,
+        ]
+    )
+
+    # Save the workbook to the HttpResponse
+    wb.save(response)
+    return response
