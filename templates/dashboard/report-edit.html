@@ -11,11 +11,11 @@
 
 {% include 'base/messages.html' %}
 
-<form class=" row gy-2 gx-3 align-items-center" method="POST" action="{% url 'report-edit' report.pk %}">
+<form class=" bg-gray-800 m-1 py-8 px-12 text-white h-full flex flex-col gap-x-10 md:flex-row justify-between rounded-md" method="POST" action="{% url 'report-edit' report.pk %}">
     {% csrf_token %}
     <input type="hidden" name="_method" value="PUT">
     <!-- Rest of your form fields -->
-    <div class="flex flex-col bg-offwhite py-8 px-24 rounded-lg gap-3 w-dvw h-dvh justify-center items-center">
+    <div class="flex flex-col bg-offwhite py-8 px-24 rounded-lg gap-3 w-full justify-center items-center">
         {% for field in form %}
             <div class="mb-4 w-full">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="{{ field.id_for_label }}">

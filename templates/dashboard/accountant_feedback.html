@@ -6,7 +6,7 @@ Collect Feedback
 
 {% block content %}
 {% include 'base/messages.html' %}
-<div class="container mx-auto px-4">
+<div class="bg-gray-800 m-1 py-8 px-12 text-white h-full rounded-md overflow-y-auto" style="scrollbar-width: none; -ms-overflow-style: none;">
     <!-- Feedback Form -->
     <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-4">
         <div class="px-4 py-5 sm:px-6">
@@ -70,7 +70,7 @@ Collect Feedback
                 {% endif %}
             </div>
         {% endfor %}
-        <button class='bg-blue-700 cursor-pointer text-white sm:px-10 py-1.5 items-center justify-center rounded-full text-base font-roboto w-1/2 text-center'>Edit</button>
+        <button type="submit" class='bg-blue-700 cursor-pointer text-white sm:px-10 py-1.5 items-center justify-center rounded-full text-base font-roboto w-1/2 text-center'>Edit</button>
         </form>
     </div>
 </div>

@@ -5,167 +5,68 @@
 {% block content %}
 
 <!-- Messages pop up -->
+{% if feedback %}
+  <script type="text/javascript">
+    var feedbackContent = "{{ feedback.content }}";  // Get feedback content from Django context
 
-{% for feedback in feedbacks %}
-<script type="text/javascript">
-  var feedbackContent = "{{ feedback.content }}";  // Get feedback content from Django context
+    Toastify({
+      text: feedbackContent,
+      duration: 4000,
+      close: true,
+      gravity: "top", // `top` or `bottom`
+      position: 'right', // `left`, `center` or `right`
+      backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+      onClick: function () { window.location = "{{ feedback.link }}"; },  // Redirect to the feedback link when the toast is clicked
+    }).showToast();
+  </script>
+{% endif %}
 
-  Toastify({
-    text: feedbackContent,
-    duration: 4000,
-    close: true,
-    gravity: "top", // `top` or `bottom`
-    position: 'right', // `left`, `center` or `right`
-    backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
-    onClick: function () { window.location = "{{ feedback.link }}"; },  // Redirect to the feedback link when the toast is clicked
-  }).showToast();
-</script>
-{% endfor %}
-
-
-<!-- dashboard start  -->
-<div class="w-full flex bg-red-300 dark:bg-gray-400 h-screentext-white font-outfit">
-  <!-- sidebar  -->
-  <div
-    class="dark:bg-gray-700 bg-gray-100 w-20 md:w-1/5 h-screen overflow-hidden flex flex-col justify-between border-r-4 border-gray-700">
-    <div>
-      <!-- logo  -->
-      <div class="flex justify-center px-2 py-4 items-center gap-1 text-white">
-        <div
-          class="[filter:blur(4px)] rounded-[50px] [background:linear-gradient(180deg,_#d9d9d9,_#737373_53%)] w-[3rem] h-[3rem] border-[4px] border-solid border-gray-400 mb-4">
-        </div>
-        <p class="hidden md:block">Client Name</p>
-      </div>
-      <!-- logo ends  -->
-      <!-- nav items side bar  -->
-      <div>
-        <div class="bg-gray-400 flex items-center justify-center gap-4 p-4 mb-1">
-          <img class="max-w-full overflow-hidden max-h-full" alt="" src="{% static 'images/group.svg' %}" />
-          <div class="hidden md:block font-semibold bg-gray-400 text-white text-center">Dashboard</div>
-        </div>
-        <div class="bg-gray-400 flex items-center justify-center gap-4 p-4 mb-1">
-          <img class="max-w-full overflow-hidden max-h-full" alt="" src="{% static 'images/basileditoutline.svg' %}" />
-          <div class="hidden md:block font-semibold bg-gray-400 text-white text-center">Add Record</div>
-        </div>
-        <div class="bg-gray-400 flex items-center justify-center gap-4 p-4">
-          <img class="max-w-full overflow-hidden max-h-full" alt=""
-            src="{% static 'images/basilfiledownloadoutline.svg' %}" />
-          <div class="hidden md:block font-semibold bg-gray-400 text-white text-center">Records</div>
-        </div>
-      </div>
-    </div>
-    <!-- logout setting   -->
-    <div class="mb-8">
-      <div class="flex items-center justify-center gap-4 text-red-500 mb-4">
-        <div class="hidden md:block font-semibold">
-          <a href={% url 'logout_user' %}>Logout</a>
-        </div>
-        <img class="w-4 overflow-hidden max-h-full" alt="" src="{% static 'images/vector.svg' %}" />
-      </div>
-      <div class="flex items-center justify-center gap-4 text-white">
-        <div class="font-semibold hidden md:block">settings</div>
-        <img class="w-4 overflow-hidden max-h-full" alt="" src="{% static 'images/mingcuteusersettingfill.svg' %}" />
-      </div>
-    </div>
+<!-- main section  -->
+<div class="bg-gray-800 m-1 py-8 px-12 text-white h-full flex flex-col md:flex-row justify-between gap-x-10 rounded-md">
+  <div class="space-y-4 w-1/2">
+    <h1 class="mb-2">All Feedbacks</h1>
+    <ul class="list-decimal list-inside space-y-2">
+        {% for feedback in feedbacks %}
+            <li class="p-4 border rounded-md">
+                <a href="{% url 'view_feedback' feedback.id %}" class="hover:text-blue-800">
+                    {{ feedback.content }}
+                </a>
+            </li>
+        {% empty %}
+            <li class="p-4 border rounded-md">
+                No feedbacks available.
+            </li>
+        {% endfor %}
+    </ul>
   </div>
-  <!-- right section    -->
-  <div class="w-4/5 flex flex-col justify-between h-screen overflow-scroll">
-    <!-- header  -->
-    <div
-      class="bg-gray-800 w-full flex flex-col md:flex-row items-start md:items-center justify-between md:px-6 md:py-2 p-2 text-white">
-      <p class="text-xl mb-4 md:mb-0 text-center w-full">Day Book</p>
-      <div class="flex items-center justify-between md:gap-10 w-full">
-        <!-- icons  -->
-        <div class="flex flex-row items-center justify-center gap-4">
-          <img class="w-4 relative h-4 cursor-pointer" alt="" src="{% static 'images/vector1.svg' %}" id="vectorIcon" />
-          <img class="w-4 relative h-4 overflow-hidden cursor-pointer" alt=""
-            src="{% static 'images/fluentdarktheme20filled.svg' %}" id="theme-toggle" />
-          <img class="w-4 relative h-4 overflow-hidden cursor-pointer" alt=""
-            src="{% static 'images/basilnotificationonoutline.svg' %}" />
-        </div>
-        <!-- employee details  -->
-        <div class="flex flex-col items-center justify-center">
-          <img class="rounded-[100px] w-8 h-8 object-cover" alt="" src="{% static 'images/2151064043-1@2x.png' %}" />
+  <!-- graphs  -->
+  <div class="font-medium w-1/2">
+    <p class="text-center hidden mb-6">Graphs and Overview</p>
 
-          <p class="text-sm text-white">{{request.user.username}}</p>
-          <p class="text-sm text-white">abcde@gmail.com</p>
-        </div>
-      </div>
-    </div>
-    <!-- main section  -->
-    <div
-      class="bg-gray-800 m-1 py-8 px-12 text-white h-full flex flex-col md:flex-row justify-between gap-x-10 rounded-md">
-      <form action="" method="POST" class="space-y-4 w-1/2">
-        {% csrf_token %}
-        <div>
-          <label for="date" class="block text-sm font-medium text-white">Date</label>
-          <input required type="date" id="date" name="date"
-            class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white text-black rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-        </div>
-        <div>
-          <label for="description" class="block text-sm font-medium text-white">Description</label>
-          <input required type="text" id="description" name="description"
-            class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white text-black rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-        </div>
-        <div class="flex space-x-4 w-full">
-          <div class="w-1/2">
-            <label for="main-category" class="block text-sm font-medium text-white">Main Category</label>
-            <input required type="text" id="main-category" name="main-category"
-              class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white text-black rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-          </div>
-          <div class="w-1/2">
-            <label for="sub-category" class="block text-sm font-medium text-white">Sub Category</label>
-            <input required type="text" id="sub-category" name="sub-category"
-              class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white text-black rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-          </div>
-        </div>
-        <div>
-          <label for="receipts" class="block text-sm font-medium text-white">Receipts</label>
-          <input required type="number" id="receipts" name="receipts"
-            class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white text-black rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-        </div>
-        <div>
-          <label for="payments" class="block text-sm font-medium text-white">Payments</label>
-          <input required type="number" id="payments" name="payments"
-            class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white text-black rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-        </div>
-        <div>
-          <button type="submit"
-            class="inline-flex w-full justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            Submit
-          </button>
-        </div>
-      </form>
-      <!-- graphs  -->
-      <div class="font-medium w-1/2">
-        <p class="text-center hidden mb-6">Graphs and Overview</p>
-
-        <!-- <div id="chartContainer" style="height: 400px; width: 500px;"></div> -->
-        <canvas id="myChart" width="200" height="200"></canvas>
-        <script>
-          var ctx = document.getElementById('myChart').getContext('2d');
-          var payments = "{{ payments }}";
-          var receipts = "{{ receipts }}";
-          var myChart = new Chart(ctx, {
-            type: 'pie',
-            data: {
-              labels: ['Payments', 'Receipts'],
-              datasets: [{
-                data: [payments, receipts],
-                backgroundColor: [
-                  'rgba(255, 99, 132, 0.2)',  // Color for Payments
-                  'rgba(54, 162, 235, 0.2)'   // Color for Receipts
-                ],
-                borderColor: [
-                  'rgba(255, 99, 132, 1)',  // Color for Payments
-                  'rgba(54, 162, 235, 1)'   // Color for Receipts
-                ]
-              }]
-            },
-          });
-        </script>
-      </div>
-    </div>
+    <!-- <div id="chartContainer" style="height: 400px; width: 500px;"></div> -->
+    <canvas id="myChart" width="200" height="200"></canvas>
+    <script>
+      var ctx = document.getElementById('myChart').getContext('2d');
+      var payments = "{{ payments }}";
+      var receipts = "{{ receipts }}";
+      var myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: ['Payments', 'Receipts'],
+          datasets: [{
+            data: [payments, receipts],
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',  // Color for Payments
+              'rgba(54, 162, 235, 0.2)'   // Color for Receipts
+            ],
+            borderColor: [
+              'rgba(255, 99, 132, 1)',  // Color for Payments
+              'rgba(54, 162, 235, 1)'   // Color for Receipts
+            ]
+          }]
+        },
+      });
+    </script>
   </div>
 </div>
 

@@ -80,10 +80,99 @@
 </head>
 
 <body class="bg-green-50">
-  {% include 'base/navbar.html' %}
-  <div class="mx-auto my-auto bg-red h-dvh">
-    {% block content %}
-    {% endblock content %}
+
+  <div class="mx-auto my-auto h-dvh flex">
+    <div class="flex w-full">
+      <!-- sidebar  -->
+      <div
+        class="dark:bg-gray-700 bg-gray-100 w-20 md:w-1/5 h-screen overflow-hidden flex flex-col justify-between border-r-4 border-gray-700">
+        <div>
+          <!-- logo  -->
+          <div class="flex justify-center px-2 py-4 items-center gap-1 text-white">
+            <div
+              class="[filter:blur(4px)] rounded-[50px] [background:linear-gradient(180deg,_#d9d9d9,_#737373_53%)] w-[3rem] h-[3rem] border-[4px] border-solid border-gray-400 mb-4">
+            </div>
+            <p class="hidden md:block">Client Name</p>
+          </div>
+          <!-- logo ends  -->
+          <!-- nav items side bar  -->
+          <div>
+            {% if request.user.user_type == "manager" %}
+            <div class="bg-gray-400 flex items-center justify-center gap-4 p-4 mb-1">
+              <img class="max-w-full overflow-hidden max-h-full" alt="" src="{% static 'images/group.svg' %}" />
+              <a href="{% url 'manager' %}"
+                class="hidden md:block font-semibold bg-gray-400 text-white text-center">Dashboard</a>
+            </div>
+            {% elif request.user.user_type == "accountant" %}
+            <div class="bg-gray-400 flex items-center justify-center gap-4 p-4 mb-1">
+              <img class="max-w-full overflow-hidden max-h-full" alt="" src="{% static 'images/group.svg' %}" />
+              <a href="{% url 'accountant' %}"
+                class="hidden md:block font-semibold bg-gray-400 text-white text-center">Dashboard</a>
+            </div>
+            {% elif request.user.user_type == "admin" %}
+            <div class="bg-gray-400 flex items-center justify-center gap-4 p-4 mb-1">
+              <img class="max-w-full overflow-hidden max-h-full" alt="" src="{% static 'images/group.svg' %}" />
+              <a href="{% url 'admin' %}"
+                class="hidden md:block font-semibold bg-gray-400 text-white text-center">Dashboard</a>
+            </div>
+            {% endif %}
+            <div class="bg-gray-400 flex items-center justify-center gap-4 p-4 mb-1">
+              <img class="max-w-full overflow-hidden max-h-full" alt=""
+                src="{% static 'images/basileditoutline.svg' %}" />
+              <a href="{% url 'create_report'%}"
+                class="hidden md:block font-semibold bg-gray-400 text-white text-center">Add Record</a>
+            </div>
+            <div class="bg-gray-400 flex items-center justify-center gap-4 p-4 mb-1">
+              <img class="max-w-full overflow-hidden max-h-full" alt=""
+                src="{% static 'images/basilfiledownloadoutline.svg' %}" />
+              <div class="hidden md:block font-semibold bg-gray-400 text-white text-center">Records</div>
+            </div>
+          </div>
+        </div>
+        <!-- logout setting   -->
+        <div class="mb-8">
+          <div class="flex items-center justify-center gap-4 text-red-500 mb-4">
+            <div class="hidden md:block font-semibold">
+              <a href="{% url 'logout_user' %}">Logout</a>
+            </div>
+            <img class="w-4 overflow-hidden max-h-full" alt="" src="{% static 'images/vector.svg' %}" />
+          </div>
+          <div class="flex items-center justify-center gap-4 text-white">
+            <div class="font-semibold hidden md:block">settings</div>
+            <img class="w-4 overflow-hidden max-h-full" alt=""
+              src="{% static 'images/mingcuteusersettingfill.svg' %}" />
+          </div>
+        </div>
+      </div>
+      <!-- right section    -->
+      <div class="w-4/5 flex flex-col justify-between h-screen overflow-y-auto overflow-x-hidden">
+        <!-- header  -->
+        <div
+          class="bg-gray-800 w-full flex flex-col md:flex-row items-center justify-between md:px-6 md:py-2 p-2 text-white">
+          <p class="text-xl mb-4 md:mb-0 text-center">Day Book</p>
+          <div class="flex w-1/2 items-center justify-between md:gap-10">
+            <!-- icons  -->
+            <div class="flex flex-row items-center justify-center gap-4">
+              <img class="w-4 relative h-4 cursor-pointer" alt="" src="{% static 'images/vector1.svg' %}"
+                id="vectorIcon" />
+              <img class="w-4 relative h-4 overflow-hidden cursor-pointer" alt=""
+                src="{% static 'images/fluentdarktheme20filled.svg' %}" id="theme-toggle" />
+              <img class="w-4 relative h-4 overflow-hidden cursor-pointer" alt=""
+                src="{% static 'images/basilnotificationonoutline.svg' %}" />
+            </div>
+            <!-- employee details  -->
+            <div class="flex flex-col items-center justify-center">
+              <img class="rounded-[100px] w-8 h-8 object-cover" alt=""
+                src="{% static 'images/2151064043-1@2x.png' %}" />
+              <p class="text-sm text-white">{{ request.user.username }}</p>
+            </div>
+          </div>
+        </div>
+        {% block content %}
+        {% endblock content %}
+      </div>
+    </div>
+
   </div>
 
 

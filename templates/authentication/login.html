@@ -1,7 +1,7 @@
 {% extends 'base/main.html' %}
 
 {% block title %}
-    Login
+Login
 {% endblock %}
 
 {% load static %}
@@ -10,67 +10,73 @@
 
 
 <section class="h-dvh bg-transparent ">
-    
-  
-                  <p class="text-center">Sign In</p>
-                  {% include 'base/messages.html' %}
 
 
-                  <div id='container' onClick={handleOnClose} class='fixed inset-0 bg-blue bg-opacity-30 backdrop-blur-sm flex justify-center items-center'>
+  <p class="text-center">Sign In</p>
+  {% include 'base/messages.html' %}
 
 
-                <div class='bg-offwhite py-8 px-24 rounded-lg'>
-                <div class='cursor-pointer'>
-                    <IoCloseCircle class='float-right text-red'/>
-                </div>
-                <p class='text-lg font-bold text-gray-400'>Login</p>
-                <p class='text-xls font-normal text-gray-400 pb-8'>Please enter your email and password to login <br /> to your <span class='text-red-400'>inventory</span> dashboard.</p>
-                <form class='pb-6'  method="post" action={% url 'login' %}>
-                  {% csrf_token %}
-            
-                    <div class='relative pb-6'>
-                        <input type="text" required name="username" id="username"  value="{{data.username}}"" class='peer  w-full rounded-t bg-white opacity-50 h-10 border-0 border-b-2 border-red focus:border-red text-black focus:outline-none appearance-none focus:ring-0 drop-shadow-xl focus:drop-shadow-xl'/>
-                        <label for="email" class='absolute left-3 -top-1 peer-focus:left-3 peer-focus:-top-1 peer-focus:text-mbl text-gray-400 text-mbl peer-placeholder-shown:text-base peer-placeholder-shown:top-2 peer-placeholder-shown:text-gray-400 transition-all'>Username</label>
-                    </div>
-                    <div class='relative pb-6'>
-                        <input type="password" name="password" id="password"placeholder=""  class='peer peer  w-full rounded-t bg-white opacity-50 h-10 border-0 border-b-2 border-red focus:border-red text-black focus:outline-none appearance-none focus:ring-0 drop-shadow-xl focus:drop-shadow-xl'/>
-                        <label for="password" class='absolute left-3 -top-1 peer-focus:left-3 peer-focus:-top-1 peer-focus:text-mbl text-gray-400 text-mbl peer-placeholder-shown:text-base peer-placeholder-shown:top-2 peer-placeholder-shown:text-gray-400 transition-all'>Password</label>
-                        <!-- <div class='absolute top-2 right-5 cursor-pointer'>
+  <div id='container' onClick={handleOnClose}
+    class='fixed inset-0 bg-blue bg-opacity-30 backdrop-blur-sm flex justify-center items-center'>
+
+
+    <div class='bg-offwhite py-8 px-24 rounded-lg'>
+      <div class='cursor-pointer'>
+        <IoCloseCircle class='float-right text-red' />
+      </div>
+      <p class='text-lg font-bold text-gray-400'>Login</p>
+      <p class='text-xls font-normal text-gray-400 pb-8'>Please enter your email and password to login <br /> to your
+        <span class='text-red-400'>inventory</span> dashboard.</p>
+      <form class='pb-6' method="post" action={% url 'login' %}>
+        {% csrf_token %}
+
+        <div class='relative pb-6'>
+          <input type="text" required name="username" id="username" value="{{data.username}}"" class='peer  w-full rounded-t bg-white opacity-50 h-10 border-0 border-b-2 border-red focus:border-red text-black focus:outline-none appearance-none focus:ring-0 drop-shadow-xl focus:drop-shadow-xl'/>
+          <label for=" email"
+            class='absolute left-3 top-1 peer-focus:left-3 peer-focus:-top-1 peer-focus:text-mbl text-gray-400 text-mbl peer-placeholder-shown:text-base peer-placeholder-shown:top-2 peer-placeholder-shown:text-gray-400 transition-all'>Username</label>
+        </div>
+        <div class='relative pb-6'>
+          <input type="password" name="password" id="password" placeholder=""
+            class='peer peer  w-full rounded-t bg-white opacity-50 h-10 border-0 border-b-2 border-red focus:border-red text-black focus:outline-none appearance-none focus:ring-0 drop-shadow-xl focus:drop-shadow-xl' />
+          <label for="password"
+            class='absolute left-3 -top-1 peer-focus:left-3 peer-focus:-top-1 peer-focus:text-mbl text-gray-400 text-mbl peer-placeholder-shown:text-base peer-placeholder-shown:top-2 peer-placeholder-shown:text-gray-400 transition-all'>Password</label>
+          <!-- <div class='absolute top-2 right-5 cursor-pointer'>
                             {
                                 (showPassword === false ? <LuEye onClick={toggle}/> : <LuEyeOff onClick={toggle}/>)
                             }
                             
                             
                         </div> -->
-                    </div>
-                    <div class='flex items-center justify-between'>
-                    <div class='flex items-center justify-start'>
-                    <input type="checkbox" name="" id=""  />
-                    <p class='p-3'>Remember me</p>
-                    </div>
-                    <div id='login' class=''>
-                        <p class='text-red hover:cursor-pointer'>Fogort password?</p>
-                    </div>
-                    </div>
-                    <div class='ml-12'>
-                        <button class='bg-green-700 cursor-pointer text-white sm:px-10 py-1.5 items-center justify-center rounded-full text-base font-roboto ml-auto mr-12'>Login</button>
-                    </div>
-            
-                </form>
+        </div>
+        <div class='flex items-center justify-between'>
+          <div class='flex items-center justify-start'>
+            <input type="checkbox" name="" id="" />
+            <p class='p-3'>Remember me</p>
+          </div>
+          <div id='login' class=''>
+            <p class='text-red hover:cursor-pointer'>Fogort password?</p>
+          </div>
+        </div>
+        <div class='ml-12'>
+          <button
+            class='bg-green-700 cursor-pointer text-white sm:px-10 py-1.5 items-center justify-center rounded-full text-base font-roboto ml-auto mr-12'>Login</button>
+        </div>
 
-            
+      </form>
 
-                <div class='pt-6'>
-                    <p>If you don't have an account, <span class='text-red cursor-pointer'>Register now</span></p>
-                </div>
-                </div>
-            
-            
-            </div>
 
-                  
-  
-                  <!-- <form class="" method="post" action={% url 'login' %}>
+
+      <div class='pt-6'>
+        <p>If you don't have an account, <span class='text-red cursor-pointer'>Register now</span></p>
+      </div>
+    </div>
+
+
+  </div>
+
+
+
+  <!-- <form class="" method="post" action={% url 'login' %}>
                       {% csrf_token %}
 
                         <div class="flex flex-col gap-2">
@@ -108,14 +114,14 @@
                         Remember Me
                       </label>
                     </div> -->
-  
-                    <!-- <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+
+  <!-- <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                       <input type="submit" class="btn btn-primary" value="Login">
                     </div> -->
-                    <!-- <button>login</button> -->
-  
-                  <!-- </form> --> 
+  <!-- <button>login</button> -->
 
-  </section>
-    
+  <!-- </form> -->
+
+</section>
+
 {% endblock %}

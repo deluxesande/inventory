@@ -9,18 +9,29 @@
 
 {% block content %}
 
-<h3>New Report</h3>
-<p  class="cursor-pointer text-gray-600 hover:text-red-400 " onClick="javascript:history.go(-2);">Go Back</p>
-{% include 'base/messages.html' %}
-
-<form class="row gy-2 gx-3 align-items-center" method="POST" action={% url 'new-report' %}>
+<form class=" bg-gray-800 m-1 py-8 px-12 text-white h-full flex flex-col gap-x-10 md:flex-row justify-between rounded-md" method="POST" action="{% url 'create_report' %}">
     {% csrf_token %}
-    <!-- {{ form  }} -->
- <div class="flex flex-col bg-offwhite py-8 px-24  rounded-lg gap-3 w-dvw h-dvh justify-center items-center">
-    {{form}}
-    <button class='bg-green-700 cursor-pointer text-white sm:px-10 py-1.5 items-center justify-center rounded-full text-base font-roboto'>Submit</button>
-    
-</div>
+    <input type="hidden" name="_method" value="PUT">
+    <!-- Rest of your form fields -->
+    <div class="flex flex-col bg-offwhite py-8 px-24 rounded-lg gap-3 w-full justify-center items-center">
+        {% for field in form %}
+            <div class="mb-4 w-full">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="{{ field.id_for_label }}">
+                    {{ field.label }}
+                </label>
+                {% if field.name == 'category' or field.name == 'subcategory' %}
+                    <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="{{ field.id_for_label }}">
+                        {% for choice in field.field.choices %}
+                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                        {% endfor %}
+                    </select>
+                {% else %}
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="{{ field.id_for_label }}" type="text" name="{{ field.name }}">
+                {% endif %}
+            </div>
+        {% endfor %}
+        <button class='bg-green-700 cursor-pointer text-white sm:px-10 py-1.5 items-center justify-center rounded-full text-base font-roboto w-full text-center'>Add Report</button>
+    </div>
 </form>
 
 {% endblock %}

@@ -147,6 +147,8 @@ def create_user(request):
     
 @auth_user_should_not_access
 def login_user(request):
+    if request.user.is_authenticated:
+        return redirect(reverse('home'))
 
     if request.method == 'POST':
         context = {'data': request.POST}
@@ -173,14 +175,8 @@ def login_user(request):
         """
          Redirects users based on whether they are in the admins group
         """
-        if request.user.groups.filter(name="admin").exists():
-            return redirect(reverse('admin'))
-        elif request.user.groups.filter(name="accountant").exists():
-            return redirect(reverse('accountant'))
-        elif request.user.groups.filter(name="manager").exists():
-            return redirect(reverse('manager'))
-        else:
-            return redirect(reverse('home'))
+        return redirect(reverse('home'))
+        
 
 
 
